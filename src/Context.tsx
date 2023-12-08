@@ -9,11 +9,20 @@ import React, {
 export interface Starship {
   name: string
   model: string
+  manufacturer: string
+  cost_in_credits: number
+  length: number
+  max_atmosphering_speed: number
+  crew: number
+  passengers: number
+
 }
 
 interface ContextProps {
   starships: Starship[]
-
+  selectedStarship: Starship | null
+  setSelectedStarship: (starship: Starship | null) => void
+  handleSelectedStarship: (starship: Starship) => void
 }
 
 const Context = createContext<ContextProps | undefined>(undefined)
@@ -52,8 +61,17 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     void fetchData()
   }, [])
 
+  const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
+
+  const handleSelectedStarship = (starship: Starship): void => {
+    setSelectedStarship(starship)
+  }
+
   const contextValue: ContextProps = {
-    starships
+    starships,
+    selectedStarship,
+    setSelectedStarship,
+    handleSelectedStarship
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>
