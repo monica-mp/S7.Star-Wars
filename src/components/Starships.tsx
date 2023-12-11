@@ -1,15 +1,16 @@
 import { useElements, type Starship } from '../Context'
 
 function Starships (): JSX.Element {
-  const { starships, selectedStarship, setSelectedStarship, handleSelectedStarship } = useElements()
+  const { starships, selectedStarship, setSelectedStarship, handleSelectedStarship, handleViewMore } = useElements()
 
   return (
+    <>
     <div className='flex flex-col gap-4'>
     {starships.map((starship: Starship) => (
       <div
         key={starship.name}
         className='border-2'
-        onClick={() => { handleSelectedStarship(starship) }} // Manejar el clic en la tarjeta
+        onClick={() => { handleSelectedStarship(starship) }}
       >
         <h1 className="text-2xl">{starship.name}</h1>
         <p>{starship.model}</p>
@@ -32,6 +33,9 @@ function Starships (): JSX.Element {
       </div>
     )}
   </div>
+  <button onClick={handleViewMore}>View more</button>
+    </>
+
   )
 }
 

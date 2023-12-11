@@ -23,6 +23,7 @@ interface ContextProps {
   selectedStarship: Starship | null
   setSelectedStarship: (starship: Starship | null) => void
   handleSelectedStarship: (starship: Starship) => void
+  handleViewMore: () => void
 }
 
 const Context = createContext<ContextProps | undefined>(undefined)
@@ -43,15 +44,21 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   children
 }) => {
   const [starships, setStarships] = useState<Starship[]>([])
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const response = await fetch('https://swapi.dev/api/starships/')
+        const response = await fetch(`https://swapi.dev/api/starships/?page=${currentPage}`)
         const data = await response.json()
 
         if (Array.isArray(data.results)) {
-          setStarships(data.results)
+          setStarships((prevStarships) => {
+            const uniqueStarships = data.results.filter((newStarship: { name: string }) =>
+              prevStarships.every((prev) => prev.name !== newStarship.name)
+            )
+            return [...prevStarships, ...uniqueStarships]
+          })
         }
       } catch (error) {
         console.error('Error fetching starships:', error)
@@ -59,7 +66,11 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     }
 
     void fetchData()
-  }, [])
+  }, [currentPage])
+
+  const handleViewMore = (): void => {
+    setCurrentPage((prevPage) => prevPage + 1)
+  }
 
   const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
 
@@ -71,7 +82,8 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     starships,
     selectedStarship,
     setSelectedStarship,
-    handleSelectedStarship
+    handleSelectedStarship,
+    handleViewMore
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>
