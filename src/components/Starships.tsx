@@ -1,41 +1,69 @@
 import { useElements, type Starship } from '../Context'
+import defaultImage from '../assets/img/defaultStarship.png'
 
 function Starships (): JSX.Element {
-  const { starships, selectedStarship, setSelectedStarship, handleSelectedStarship, handleViewMore } = useElements()
+  const {
+    starships,
+    selectedStarship,
+    setSelectedStarship,
+    handleViewMore,
+    currentPage
+  } = useElements()
 
   return (
-    <>
-    <div className='flex flex-col gap-4'>
-    {starships.map((starship: Starship) => (
-      <div
-        key={starship.name}
-        className='border-2'
-        onClick={() => { handleSelectedStarship(starship) }}
-      >
-        <h1 className="text-2xl">{starship.name}</h1>
-        <p>{starship.model}</p>
-      </div>
-    ))}
+    <div className='flex flex-col gap-4 w-3/5 mx-auto font-mono'>
+      {starships.map((starship: Starship, index: number) => (
+        <div
+          key={index}
+          className='bg-neutral-900 p-4'
+          onClick={() => {
+            selectedStarship !== null && selectedStarship.name === starship.name
+              ? setSelectedStarship(null)
+              : setSelectedStarship(starship)
+          }}
+        >
+          {selectedStarship === null || selectedStarship.name !== starship.name
+            ? (
+            <>
+              <h1 className="text-2xl ">{starship.name.toUpperCase()}</h1>
+              <p>{starship.model}</p>
+            </>
+              )
+            : (
+              <>
+               <div className='border-t-2 border-b-2 text-xl py-2 pl-2 text-white '>STARSHIP</div>
+                <div className='flex gap-4'>
+                  <img
+                    src={selectedStarship.image}
+                    alt={selectedStarship.name}
+                    onError={(e) => {
+                      e.currentTarget.src = defaultImage
+                    }}
+                  />
+                  <ul className='flex flex-col gap-2 py-4 text-xl px-2 '>
+                    <li className='text-white'>Name: {selectedStarship.name.toUpperCase()}</li>
+                    <li>Model: {selectedStarship.model}</li>
+                    <li>Manufacturer: {selectedStarship.manufacturer}</li>
+                    <li>Cost: {selectedStarship.cost_in_credits} credits</li>
+                    <li>Length: {selectedStarship.length} m</li>
+                    <li>Max speed: {selectedStarship.max_atmosphering_speed} km/h</li>
+                    <li>Crew: {selectedStarship.crew}</li>
+                    <li>Passengers: {selectedStarship.passengers}</li>
+                  </ul>
+                </div>
+              </>
 
-    {(selectedStarship != null) && (
-      <div className='border-2'>
-        <button onClick={() => { setSelectedStarship(null) }}>Close</button>
-        <ul>
-          <li>Name: {selectedStarship.name}</li>
-          <li>Model: {selectedStarship.model}</li>
-          <li>Manufacturer: {selectedStarship.manufacturer}</li>
-          <li>Cost in credits: {selectedStarship.cost_in_credits}</li>
-          <li>Length: {selectedStarship.length}</li>
-          <li>Max speed: {selectedStarship.max_atmosphering_speed}</li>
-          <li>Crew: {selectedStarship.crew}</li>
-          <li>Passengers: {selectedStarship.passengers}</li>
-        </ul>
-      </div>
-    )}
-  </div>
-  <button onClick={handleViewMore}>View more</button>
-    </>
+              )}
+        </div>
+      ))}
+      {(currentPage === 4
+        ? null
+        : (
+        <button className='btn btn-outline btn-sm w-24 mx-auto my-4' onClick={handleViewMore}>
+        View more
+      </button>))}
 
+    </div>
   )
 }
 

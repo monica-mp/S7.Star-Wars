@@ -15,6 +15,7 @@ export interface Starship {
   max_atmosphering_speed: number
   crew: number
   passengers: number
+  image: string
 
 }
 
@@ -22,8 +23,8 @@ interface ContextProps {
   starships: Starship[]
   selectedStarship: Starship | null
   setSelectedStarship: (starship: Starship | null) => void
-  handleSelectedStarship: (starship: Starship) => void
   handleViewMore: () => void
+  currentPage: number
 }
 
 const Context = createContext<ContextProps | undefined>(undefined)
@@ -45,6 +46,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
 }) => {
   const [starships, setStarships] = useState<Starship[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -54,10 +56,24 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
 
         if (Array.isArray(data.results)) {
           setStarships((prevStarships) => {
-            const uniqueStarships = data.results.filter((newStarship: { name: string }) =>
-              prevStarships.every((prev) => prev.name !== newStarship.name)
-            )
-            return [...prevStarships, ...uniqueStarships]
+            const newStarships = data.results.map((newStarship: { url: string }) => {
+              // Obtener el número de la nave desde la URL
+              const shipNumber = newStarship.url.split('/').filter(Boolean).pop()
+
+              // Crear la URL de la imagen
+              const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${shipNumber}.jpg`
+
+              return {
+                ...newStarship,
+                image: imageUrl
+              }
+            })
+
+            // Convinar i esborrar duplicats basant-se en el nou de la nau
+            const updatedStarships = [...new Set([...prevStarships, ...newStarships].map(starship => starship.name))]
+              .map(name => [...prevStarships, ...newStarships].find(starship => starship.name === name))
+
+            return updatedStarships
           })
         }
       } catch (error) {
@@ -72,18 +88,12 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     setCurrentPage((prevPage) => prevPage + 1)
   }
 
-  const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
-
-  const handleSelectedStarship = (starship: Starship): void => {
-    setSelectedStarship(starship)
-  }
-
   const contextValue: ContextProps = {
     starships,
     selectedStarship,
     setSelectedStarship,
-    handleSelectedStarship,
-    handleViewMore
+    handleViewMore,
+    currentPage
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>

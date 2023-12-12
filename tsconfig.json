@@ -24,7 +24,7 @@
   },
   "include": [
     ".eslintrc.cjs",
-    "tailwind.config.cjs",
+    "tailwind.config.js",
     "./tsconfig.json",
     "./tsconfig.node.json",
     "postcss.config.cjs",
