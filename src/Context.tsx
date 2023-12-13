@@ -57,10 +57,8 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
         if (Array.isArray(data.results)) {
           setStarships((prevStarships) => {
             const newStarships = data.results.map((newStarship: { url: string }) => {
-              // Obtener el número de la nave desde la URL
               const shipNumber = newStarship.url.split('/').filter(Boolean).pop()
 
-              // Crear la URL de la imagen
               const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${shipNumber}.jpg`
 
               return {
@@ -69,7 +67,6 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
               }
             })
 
-            // Convinar i esborrar duplicats basant-se en el nou de la nau
             const updatedStarships = [...new Set([...prevStarships, ...newStarships].map(starship => starship.name))]
               .map(name => [...prevStarships, ...newStarships].find(starship => starship.name === name))
 

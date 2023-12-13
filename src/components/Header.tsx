@@ -8,11 +8,10 @@ const Navbar = (): JSX.Element => {
           <a href="#" className="w-4"><img src="./src/assets/img/instagram.png" alt="Icon 3" /></a>
           <a href="#" className="w-4"><img src="./src/assets/img/tiktok.png" alt="Icon 4" /></a>
         </div>
-        <img src="../src/assets/img/logo.png" className="mx-auto w-80" />
+        <img src="../src/assets/img/logo.png" className="mx-auto w-80" alt="Logo" />
         <div className="flex self-start text-xl text-white font-mono">
           <button className="border-r-2 pr-2">LOG IN</button>
           <button className="pl-2">SIGN UP</button>
-
         </div>
       </div>
       <div className="flex justify-center mb-2 gap-6 border-t-2 border-b-2 border-neutral-800">
