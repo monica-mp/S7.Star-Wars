@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const Navbar = (): JSX.Element => {
   return (
     <>
@@ -7,6 +9,7 @@ const Navbar = (): JSX.Element => {
           <a href="#" className="w-4"><img src="./src/assets/img/yt.png" alt="Icon 2" /></a>
           <a href="#" className="w-4"><img src="./src/assets/img/instagram.png" alt="Icon 3" /></a>
           <a href="#" className="w-4"><img src="./src/assets/img/tiktok.png" alt="Icon 4" /></a>
+          <a href="#" className="w-4"><img src="./src/assets/img/facebook.png" alt="Icon 5" /></a>
         </div>
         <img src="../src/assets/img/logo.png" className="mx-auto w-80" alt="Logo" />
         <div className="flex self-start text-xl text-white font-mono">
@@ -14,9 +17,12 @@ const Navbar = (): JSX.Element => {
           <button className="pl-2">SIGN UP</button>
         </div>
       </div>
-      <div className="flex justify-center mb-2 gap-6 border-t-2 border-b-2 border-neutral-800">
-        <a className="text-xl text-white font-mono border-x-2 border-neutral-800 px-6 cursor-pointer py-2">HOME</a>
-        <a className="text-xl text-white font-mono border-r-2 border-neutral-800 pr-6 cursor-pointer py-2">STARSHIPS</a>
+
+      <div className="flex justify-center items-center mb-2 gap-6 border-t-2 border-b-2 border-neutral-800">
+      <Link to="/">
+        <a className="text-xl text-white font-mono border-r-2 border-l-2 border-neutral-800 px-6 py-3">HOME</a>
+      </Link>
+        <a className="text-xl text-white font-mono border-r-2 border-neutral-800 pr-6 py-2">STARSHIPS</a>
       </div>
 
     </>

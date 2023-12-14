@@ -31,7 +31,7 @@ function Starships (): JSX.Element {
               )
             : (
               <>
-               <div className='border-t-2 border-b-2 text-xl py-2 pl-2 text-white '>STARSHIP</div>
+               <div className='border-t-2 border-b-2 text-xl py-2 pl-2 text-white'>STARSHIP</div>
                 <div className='flex gap-4'>
                   <img
                     src={selectedStarship.image}
