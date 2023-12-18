@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "email": "monica_munyoz_pedemonte@hotmail.com",
+      "password": "$2a$10$TXuP/NvhcGpZUy92Zn/TAOyVr8LDPELngR2fbNFCfK.ALwXiPzFk2",
+      "id": 1
+    },
+    {
+      "email": "garskatmine@gmail.com",
+      "password": "$2a$10$OSVvgkc6NDfgtkI6jDGlY.O7VuWz2qIDvGDeX3selppkNf2LyDyHi",
+      "id": 2
+    }
+  ]
+}

@@ -1,24 +1,23 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import App from './App'
 import Home from './components/Home/Home'
+import Signup from './components/Signup'
+import Login from './components/Login'
+import ContextProvider from './Context'
 
-// Establir rutes
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
-  {
-    path: '/app',
-    element: <App />
-  }
-])
-
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-ReactDOM.createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root') as Element).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/App" element={<App />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+      </Routes>
+    </Router>
+    </ContextProvider>
   </React.StrictMode>
 )

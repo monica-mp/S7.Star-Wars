@@ -25,6 +25,9 @@ interface ContextProps {
   setSelectedStarship: (starship: Starship | null) => void
   handleViewMore: () => void
   currentPage: number
+  isLoggedIn: boolean
+  setIsLoggedIn: (isLoggedIn: boolean) => void
+  handleLoggedIn: () => void
 }
 
 const Context = createContext<ContextProps | undefined>(undefined)
@@ -47,6 +50,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   const [starships, setStarships] = useState<Starship[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -85,12 +89,19 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     setCurrentPage((prevPage) => prevPage + 1)
   }
 
+  const handleLoggedIn = (): void => {
+    setIsLoggedIn(false)
+  }
+
   const contextValue: ContextProps = {
     starships,
     selectedStarship,
     setSelectedStarship,
     handleViewMore,
-    currentPage
+    currentPage,
+    isLoggedIn,
+    setIsLoggedIn,
+    handleLoggedIn
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useElements } from '../Context'
 
 const Navbar = (): JSX.Element => {
+  const { isLoggedIn, handleLoggedIn } = useElements()
   return (
     <>
       <div className="flex py-6 px-6" >
@@ -13,8 +15,24 @@ const Navbar = (): JSX.Element => {
         </div>
         <img src="../src/assets/img/logo.png" className="mx-auto w-80" alt="Logo" />
         <div className="flex self-start text-xl text-white font-mono">
-          <button className="border-r-2 pr-2">LOG IN</button>
-          <button className="pl-2">SIGN UP</button>
+        {isLoggedIn
+          ? (
+            <>
+              <Link to="/">
+                <button className="p-2" onClick={handleLoggedIn}>LOG OUT</button>
+              </Link>
+            </>
+            )
+          : (
+            <>
+              <Link to="/login">
+                <button className="border-r-2 pr-2">LOG IN</button>
+              </Link>
+              <Link to="/signup">
+                <button className="pl-2">SIGN UP</button>
+              </Link>
+            </>
+            )}
         </div>
       </div>
 
