@@ -4,7 +4,7 @@ import { useElements } from '../Context'
 
 function Login (): JSX.Element {
   const navigate = useNavigate()
-  const { setIsLoggedIn } = useElements()
+  const { setIsLoggedIn, setIsUserLoggedIn } = useElements()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,6 +23,7 @@ function Login (): JSX.Element {
         const data = await response.json()
         console.log(data.user)
         setIsLoggedIn(true)
+        setIsUserLoggedIn(true)
         navigate('/app')
       } else {
         console.error('Login failed')

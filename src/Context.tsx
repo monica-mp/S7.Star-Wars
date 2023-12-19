@@ -28,11 +28,13 @@ interface ContextProps {
   isLoggedIn: boolean
   setIsLoggedIn: (isLoggedIn: boolean) => void
   handleLoggedIn: () => void
+  isUserLoggedIn: boolean
+  setIsUserLoggedIn: (isUserLoggedIn: boolean) => void
 }
 
 const Context = createContext<ContextProps | undefined>(undefined)
 
-export const useElements = (): ContextProps => {
+export const useElements: () => ContextProps = (): ContextProps => {
   const context = useContext(Context)
   if (context == null) {
     throw new Error('useElements must be used within a ContextProvider')
@@ -51,6 +53,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [selectedStarship, setSelectedStarship] = useState<Starship | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -90,7 +93,7 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   }
 
   const handleLoggedIn = (): void => {
-    setIsLoggedIn(false)
+    setIsLoggedIn(true)
   }
 
   const contextValue: ContextProps = {
@@ -101,7 +104,9 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
     currentPage,
     isLoggedIn,
     setIsLoggedIn,
-    handleLoggedIn
+    handleLoggedIn,
+    isUserLoggedIn,
+    setIsUserLoggedIn
   }
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>

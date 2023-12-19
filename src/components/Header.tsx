@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useElements } from '../Context'
 
 const Navbar = (): JSX.Element => {
-  const { isLoggedIn, handleLoggedIn } = useElements()
+  const { isLoggedIn, setIsUserLoggedIn } = useElements()
   return (
     <>
       <div className="flex py-6 px-6" >
@@ -19,7 +19,7 @@ const Navbar = (): JSX.Element => {
           ? (
             <>
               <Link to="/">
-                <button className="p-2" onClick={handleLoggedIn}>LOG OUT</button>
+                <button className="p-2" onClick={() => { setIsUserLoggedIn(false) }}>LOG OUT</button>
               </Link>
             </>
             )
