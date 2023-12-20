@@ -15,7 +15,6 @@ export function Rutes (): JSX.Element {
         <Route element={<ProtectedRoute canActivate={isUserLoggedIn} redirectPath='/login'/>}>
           <Route path="/app" element={<App />} />
         </Route>
-
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
       </Routes>

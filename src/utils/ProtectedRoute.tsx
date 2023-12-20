@@ -5,11 +5,14 @@ const ProtectedRoute = ({
   redirectPath = '/'
 }: {
   canActivate: boolean
-  redirectPath?: string | undefined }): JSX.Element => {
-  if (!(canActivate)) {
-    return <Navigate to={redirectPath} replace/>
+  redirectPath?: string | undefined
+}): JSX.Element => {
+  // If the user cannot access the route, redirect to the specified path
+  if (!canActivate) {
+    return <Navigate to={redirectPath} replace />
   }
-  return <Outlet/>
+  // If the user can access the route, render the route's content
+  return <Outlet />
 }
 
 export default ProtectedRoute
