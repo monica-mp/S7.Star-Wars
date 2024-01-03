@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useElements, type Starship } from '../Context'
 import defaultImage from '../assets/img/defaultStarship.png'
 import PilotsList from './Pilots'
+import FilmsList from './Films'
 
 function Starships (): JSX.Element {
   const {
@@ -59,6 +60,7 @@ function Starships (): JSX.Element {
 
             </div>
             <PilotsList pilots={selectedStarship.pilots} />
+            <FilmsList films={selectedStarship.films}/>
             <button
             className='btn btn-outline btn-sm w-24 mx-auto my-4'
             onClick={handleBackToList}

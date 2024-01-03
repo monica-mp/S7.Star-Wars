@@ -18,9 +18,13 @@ export interface Starship {
   passengers: number
   image: string
   pilots: string[]
+  films: string[]
 }
 export interface PilotsListProps {
   pilots: string[]
+}
+export interface FilmsListProps {
+  films: string[]
 }
 
 // Definition of the properties of the context
@@ -80,23 +84,41 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
         return []
       }
     }
+    const fetchFilms = async (urls: string[]): Promise<string[]> => {
+      try {
+        const filmsPromises = urls.map(async (url: string) => {
+          const response = await fetch(url)
+          const data = await response.json()
+          return data.title
+        })
+
+        const films = await Promise.all(filmsPromises)
+        return films
+      } catch (error) {
+        console.error('Error fetching films:', error)
+        return []
+      }
+    }
     const fetchData = async (): Promise<void> => {
       try {
         const response = await fetch(`https://swapi.dev/api/starships/?page=${currentPage}`)
         const data = await response.json()
 
         if (Array.isArray(data.results)) {
-          const newStarships = await Promise.all(data.results.map(async (newStarship: { url: string, pilots: string[] }) => {
+          const newStarships = await Promise.all(data.results.map(async (newStarship: { url: string, pilots: string[], films: string[] }) => {
             const shipNumber = newStarship.url.split('/').filter(Boolean).pop()
             const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${shipNumber}.jpg`
 
             // Fetch pilots for the current starship
             const pilots = await fetchPilots(newStarship.pilots)
+            // Fetch films for the current starship
+            const films = await fetchFilms(newStarship.films)
 
             return {
               ...newStarship,
               image: imageUrl,
-              pilots // Add the pilots array to the starship object
+              pilots,
+              films
             }
           }))
 
