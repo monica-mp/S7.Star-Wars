@@ -60,7 +60,7 @@ function Login (): JSX.Element {
         <form className='flex flex-col gap-4' onSubmit={e => { void handleSubmit(e) }}>
           <input type='text' className='input input-bordered border-gray-300 rounded-full' placeholder='Email' value={formData.email} name='email' onChange={e => { handleChange(e) }} ></input>
           <input type='password' className='input input-bordered border-gray-300 rounded-full' placeholder='Password' value={formData.password} name='password' onChange={e => { handleChange(e) }} ></input>
-          {(error.length > 0) && <p className='text-red-00'>{error}</p>}
+          {(error.length > 0) && <p className='text-red-600'>{error}</p>}
           <div className='flex flex-col gap-4 mt-4'>
             <button className='btn btn-info w-24  rounded-full mx-auto' type='submit'>LOGIN</button>
             <div className="flex items-center ">

@@ -17,6 +17,10 @@ export interface Starship {
   crew: number
   passengers: number
   image: string
+  pilots: string[]
+}
+export interface PilotsListProps {
+  pilots: string[]
 }
 
 // Definition of the properties of the context
@@ -61,45 +65,54 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false)
 
   useEffect(() => {
-    // Asyncs function to fetch starship data
+    const fetchPilots = async (urls: string[]): Promise<string[]> => {
+      try {
+        const pilotsPromises = urls.map(async (url: string) => {
+          const response = await fetch(url)
+          const data = await response.json()
+          return data.name
+        })
+
+        const pilots = await Promise.all(pilotsPromises)
+        return pilots
+      } catch (error) {
+        console.error('Error fetching pilots:', error)
+        return []
+      }
+    }
     const fetchData = async (): Promise<void> => {
       try {
-        // Request to the StarWars API to get starships
         const response = await fetch(`https://swapi.dev/api/starships/?page=${currentPage}`)
         const data = await response.json()
 
-        // Check if the API results are an array
         if (Array.isArray(data.results)) {
-          // Update the state of starships using the previous state (prevStarships)
-          setStarships((prevStarships) => {
-            // Map the API results to add the image URL
-            const newStarships = data.results.map((newStarship: { url: string }) => {
-              // Get the starship number from the URL to construct the image URL
-              const shipNumber = newStarship.url.split('/').filter(Boolean).pop()
-              const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${shipNumber}.jpg`
+          const newStarships = await Promise.all(data.results.map(async (newStarship: { url: string, pilots: string[] }) => {
+            const shipNumber = newStarship.url.split('/').filter(Boolean).pop()
+            const imageUrl = `https://starwars-visualguide.com/assets/img/starships/${shipNumber}.jpg`
 
-              // Return a new starship object that includes the image URL
-              return {
-                ...newStarship,
-                image: imageUrl
-              }
-            })
+            // Fetch pilots for the current starship
+            const pilots = await fetchPilots(newStarship.pilots)
 
-            // Remove duplicates based on the starship name and maintain the original order
-            const updatedStarships = [...new Set([...prevStarships, ...newStarships].map(starship => starship.name))]
-              .map(name => [...prevStarships, ...newStarships].find(starship => starship.name === name))
+            return {
+              ...newStarship,
+              image: imageUrl,
+              pilots // Add the pilots array to the starship object
+            }
+          }))
 
-            return updatedStarships
-          })
+          const updatedStarships = [
+            ...new Set([...starships, ...newStarships].map(starship => starship.name))
+          ].map(name => [...starships, ...newStarships].find(starship => starship.name === name))
+
+          setStarships(updatedStarships)
         }
       } catch (error) {
         console.error('Error fetching starships:', error)
       }
     }
 
-    // Call fetchData function to get and update data when the current page changes
     void fetchData()
-  }, [currentPage]) // This effect runs when the page changes
+  }, [currentPage, starships])
 
   // Load more data (pages) of starships
   const handleViewMore = (): void => {

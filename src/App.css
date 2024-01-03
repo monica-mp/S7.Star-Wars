@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
-body{
+:root{
     background-color: black;
+    min-height: 100%;
 }
