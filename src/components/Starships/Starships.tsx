@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useElements, type Starship } from '../Context'
+import { useElements, type Starship } from '../../Context'
 import defaultImage from '../assets/img/defaultStarship.png'
-import PilotsList from './Pilots'
-import FilmsList from './Films'
+import PilotsList from '../Pilots/Pilots'
+import FilmsList from '../Films/Films'
 
 function Starships (): JSX.Element {
   const {

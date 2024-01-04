@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useElements } from '../Context'
+import { useElements } from '../../Context'
 
 const Navbar = (): JSX.Element => {
   const { isLoggedIn, setIsUserLoggedIn } = useElements()
