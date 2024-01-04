@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useElements, type Starship } from '../../Context'
-import defaultImage from '../assets/img/defaultStarship.png'
+import defaultImage from '../../assets/img/defaultStarship.png'
 import PilotsList from '../Pilots/Pilots'
 import FilmsList from '../Films/Films'
 
