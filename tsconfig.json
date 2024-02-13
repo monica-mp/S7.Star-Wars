@@ -30,7 +30,7 @@
     "postcss.config.cjs",
     "src",
     "vite.config.ts",
-    "src/components/Films/Films.test.tsx"
+    "src/components/Films/Films.test.tsx",
   ],
   "references": [
     {

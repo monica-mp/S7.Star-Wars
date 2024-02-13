@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import jediImage from '../../assets/img/jedi.jpg'
 import empireImage from '../../assets/img/empire.jpg'
 import starWarsImage from '../../assets/img/star-wars.jpg'
-import './home.css'
 
 function Home (): JSX.Element {
   return (
@@ -33,7 +32,7 @@ function Home (): JSX.Element {
             </div>
         </div>
         <div className="hero min-h-screen ">
-            <h1 className="text-3xl font-bold text-yellow-300">A LONG TIME AGO IN A GALAXY FAR, FAR AWAY...</h1>
+            <h1 className="text-3xl font-bold font-font2 text-yellow-300">A LONG TIME AGO IN A GALAXY FAR, FAR AWAY...</h1>
         </div>
         <Link to="/app" className="mx-auto">
             <button className='btn btn-outline font-mono'>
