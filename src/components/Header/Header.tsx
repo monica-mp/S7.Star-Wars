@@ -7,13 +7,13 @@ const Navbar = (): JSX.Element => {
     <>
       <div className="flex py-6 px-6" >
         <div className="flex self-start items-center gap-4">
-          <a href="#" className="w-4"><img src="./src/assets/img/twitter.png" alt="Icon 1" /></a>
-          <a href="#" className="w-4"><img src="./src/assets/img/yt.png" alt="Icon 2" /></a>
-          <a href="#" className="w-4"><img src="./src/assets/img/instagram.png" alt="Icon 3" /></a>
-          <a href="#" className="w-4"><img src="./src/assets/img/tiktok.png" alt="Icon 4" /></a>
-          <a href="#" className="w-4"><img src="./src/assets/img/facebook.png" alt="Icon 5" /></a>
+          <a href="#" className="w-4"><img src="src\assets\img\twitter.png" alt="Icon 1" /></a>
+          <a href="#" className="w-4"><img src="src\assets\img\yt.png" alt="Icon 2" /></a>
+          <a href="#" className="w-4"><img src="src\assets\img\instagram.png" alt="Icon 3" /></a>
+          <a href="#" className="w-4"><img src="src\assets\img\tiktok.png" alt="Icon 4" /></a>
+          <a href="#" className="w-4"><img src="src\assets\img\facebook.png" alt="Icon 5" /></a>
         </div>
-        <img src="../src/assets/img/logo.png" className="mx-auto w-80" alt="Logo" />
+        <img src="src\assets\img\logo.png" className="mx-auto w-80" alt="Logo" />
         <div className="flex self-start text-xl text-white font-mono">
         {isLoggedIn
           ? (
